@@ -1,53 +1,47 @@
 import json
 
 class Metrics:
-    #Максимальное количество потоков
-    def getMaxThread() -> int:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        return data['thread_count_max']
+    def __init__(self):
+        self.threadCountMax = getMaxThread()
+        self.threadConut = 0
+        self.queue = []
+        self.handledFiles = []#getHandledFiles()
+        self.version = getVersion()
     
-    #Количество запущенных потоков
-    def getThreadsCount() -> int:
+    def setQueue(self) -> None:
         with open('metrics/variables.json', 'r') as f:
             data = json.load(f)
-        return data['thread_count']
-    
-    def setThreadsCount(count: int) -> None:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        data['thread_count'] = count
+        data['queue'] = self.queue
         with open('metrics/variables.json', 'w') as f:
             json.dump(data, f)
-            
-    #Очередь задач
-    def getQueue() -> list:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        return data['queue']
     
-    def setQueue(queue: list) -> None:
+    def setHandledFiles(self) -> None:
         with open('metrics/variables.json', 'r') as f:
             data = json.load(f)
-        data['queue'] = queue
+        data['handled_files'] = self.handledFiles
         with open('metrics/variables.json', 'w') as f:
             json.dump(data, f)
-            
-    #Обработанные файлы
-    def getHandledFiles() -> list:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        return data['handled_files']
-    
-    def setHandledFiles(handledFiles: list) -> None:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        data['handled_files'] = handledFiles
-        with open('metrics/variables.json', 'w') as f:
-            json.dump(data, f)
-            
-    #Версия программы
-    def getVersion() -> str:
-        with open('metrics/variables.json', 'r') as f:
-            data = json.load(f)
-        return data['version']
+
+#Обработанные файлы
+def getHandledFiles() -> list:
+    with open('metrics/variables.json', 'r') as f:
+        data = json.load(f)
+    return data['handled_files']
+
+#Максимальное количество потоков
+def getMaxThread() -> int:
+    with open('metrics/variables.json', 'r') as f:
+        data = json.load(f)
+    return data['thread_count_max']
+
+#Версия программы
+def getVersion() -> str:
+    with open('metrics/variables.json', 'r') as f:
+        data = json.load(f)
+    return data['version']
+
+#Очередь задач
+def getQueue() -> list:
+    with open('metrics/variables.json', 'r') as f:
+        data = json.load(f)
+    return data['queue']

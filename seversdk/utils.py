@@ -1,5 +1,11 @@
 import os
 import ffmpeg
+import random
+import string
+
+def generateString(length: int) -> str:
+    alphabet = string.ascii_lowercase + string.digits
+    return ''.join(random.choices(alphabet, k=length))
 
 def checkNewFile(handlerFiles: list):
     #Собираем список всех файлов в папке inbox_audio

@@ -2,74 +2,43 @@ import threading
 import multiprocessing
 from worker import worker
 from seversdk import logger, checkNewFile, Metrics, transribeInit
+import traceback
 
-workMode = 't' # t - threadiing, p - multiprocess
+WORK_MODE = 't' # t - threadiing, p - multiprocess
 
-def loadMetrics():
-    #Версия программы
-    version = Metrics.getVersion()
-    
-    #Максимальное число потоков
-    MAX_THREADS = Metrics.getMaxThread()
-    
-    #Количество запущенных потокв
-    threadsCount = Metrics.getThreadsCount()
-    
-    #Очередь задач
-    queue = Metrics.getQueue()
-    
-    #Обработанные файлы
-    handledFiles = Metrics.getHandledFiles()
-    
-    return (version, MAX_THREADS, threadsCount, queue, handledFiles)
-    
+#Инициализируем метрики
+metrics = Metrics()
 
 #Менеджер по потокам, функция раздаёт задачи
 def main():
-    #Загружаем метрики
-    version, MAX_THREADS, threadsCount, queue, handledFiles = loadMetrics()
-    
-    #Обнулям занятые потоки
-    Metrics.setThreadsCount(0)
-    threadsCount = 0
-    
-    #Обнуляем очередь
-    Metrics.setQueue([])
-    queue = []
-    
-    #Обнуляем обработанные файлы
-    Metrics.setHandledFiles([])
-    handledFiles = []
-    
     #Инициализируем нейросеть, затем проверяем её
     pipe, cudaAwailable = transribeInit()
     
     #Логируем запуск программы
     logger.info(
         f"\nПрограмма запущена: True\
-        \nMакс. кол-во потоков:{MAX_THREADS}\
-        \nВерсия: {version}\
-        \nРежим работы: {'threading' if workMode == 't' else 'multiprocessing' if workMode == 'p' else 'subprocess'}\
+        \nMакс. кол-во потоков:{metrics.threadCountMax}\
+        \nВерсия: {metrics.version}\
+        \nРежим работы: {'threading' if WORK_MODE == 't' else 'multiprocessing' if WORK_MODE == 'p' else 'subprocess'}\
         \nCUDA доступна: {cudaAwailable}"
     )
     
     #Основной цикл работы программы
-    while True:
-        #Обновляем метрики
-        version, MAX_THREADS, threadsCount, queue, handledFiles = loadMetrics()
-        
+    while True:     
+        #Сохраняем значение в метриках
+        metrics.setHandledFiles()
+        metrics.setQueue()
+           
         #Получаем новый файл
-        newFile = checkNewFile(handledFiles)
+        newFile = checkNewFile(metrics.handledFiles)
         
         #Если файл не None
         if newFile:
-            handledFiles.append(newFile)
-            Metrics.setHandledFiles(handledFiles)
+            metrics.handledFiles.append(newFile)
             
             #Если нет свободных потоков добаляем в очередь
-            if threadsCount >= MAX_THREADS:
-                queue.append(newFile)
-                Metrics.setQueue(queue)
+            if metrics.threadConut >= metrics.threadCountMax:
+                metrics.queue.append(newFile)
                 
                 logger.info(f"Файл {newFile} добавлен в очередь")
             
@@ -78,23 +47,32 @@ def main():
                 logger.info(f"Файл {newFile} взят в обработку")
                 
                 #Запуск нового процесса
-                if workMode == "p":
+                if WORK_MODE == "p":
                     multiprocessing.Process(
                         target=worker,
-                        args=(newFile, pipe),
-                        name=f"Thread-{threadsCount}"
+                        args=(newFile, pipe, metrics),
+                        name=f"Thread-{metrics.threadConut}"
                     ).start()
-                elif workMode == "t":
+                elif WORK_MODE == "t":
                     threading.Thread(
                         target=worker,
-                        args=(newFile, pipe),
-                        name=f"Thread-{threadsCount}"
+                        args=(newFile, pipe, metrics),
+                        name=f"Thread-{metrics.threadConut}"
                     ).start()                    
                 
-                threadsCount += 1
-                Metrics.setThreadsCount(threadsCount)
+                metrics.threadConut += 1
         
 if __name__ == "__main__":
-    main()
-    #Логируем стандартное завершение программы
-    logger.info("Программа завершила работу")
+    try:
+        main()
+    except Exception as e:
+        #Логируем ошибку
+        logger.critical(f"Ошибка в основном цикле программы: {e}")
+        traceback.print_exc()
+    finally:
+        #Логируем стандартное завершение программы
+        logger.info("Программа завершила работу")
+        
+        #Сохраняем метрики
+        metrics.setHandledFiles()
+        metrics.setQueue()
