@@ -24,7 +24,7 @@ def transribeInit():
         return_timestamps=True
     )
     
-    return pipe
+    return (pipe, torch.cuda.is_available())
 
 def transcribe(pipe, path):
     return pipe(path)["text"]

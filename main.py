@@ -41,15 +41,16 @@ def main():
     Metrics.setHandledFiles([])
     handledFiles = []
     
-    #Инициализируем нейросеть
-    pipe = transribeInit()
+    #Инициализируем нейросеть, затем проверяем её
+    pipe, cudaAwailable = transribeInit()
     
     #Логируем запуск программы
     logger.info(
         f"\nПрограмма запущена: True\
         \nMакс. кол-во потоков:{MAX_THREADS}\
         \nВерсия: {version}\
-        \nРежим работы: {'threading' if workMode == 't' else 'multiprocessing' if workMode == 'p' else 'subprocess'}"
+        \nРежим работы: {'threading' if workMode == 't' else 'multiprocessing' if workMode == 'p' else 'subprocess'}\
+        \nCUDA доступна: {cudaAwailable}"
     )
     
     #Основной цикл работы программы
