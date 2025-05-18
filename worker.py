@@ -9,20 +9,20 @@ def worker(path, pipe):
     #Засекаем время обработки
     timeStart = time.time()
     
-    #Конвертация в WAV
-    try:
-        convertMp3ToWav(
-            input_path=f'inbox_audio/{path}',
-            output_path=f'results/{path.replace(".mp3", "")}.wav'
-        )
-    except Exception as e:
-        logger.critical(f"Ошибка при конвертации файла {path}: {e}")
-        logger.info(f"Файл {path} не обработан")
+    # #Конвертация в WAV
+    # try:
+    #     convertMp3ToWav(
+    #         input_path=f'inbox_audio/{path}',
+    #         output_path=f'results/{path.replace(".mp3", "")}.wav'
+    #     )
+    # except Exception as e:
+    #     logger.critical(f"Ошибка при конвертации файла {path}: {e}")
+    #     logger.info(f"Файл {path} не обработан")
     
     #Транскрибация
     try:
-        text = transcribe(pipe, f'results/{path.replace(".mp3", "")}.wav')
-    except:
+        text = transcribe(pipe, f'inbox_audio/{path}')
+    except Exception as e:
         logger.critical(f"Ошибка при транскрибации файла {path}: {e}")
         logger.info(f"Файл {path} не обработан")
     

@@ -1,38 +1,36 @@
-2025-05-15 15:38:06 [INFO] seversdk.logger_configure: 
-Программа запущена: True        
-Mакс. кол-во потоков:5        
-Версия: 0.0.1a        
-Режим работы: multiprocessing
-2025-05-15 15:38:06 [INFO] seversdk.logger_configure: Файл test.mp3 взят в обработку
-2025-05-15 15:38:12 [INFO] seversdk.logger_configure: Файл test5.mp3 взят в обработку
-2025-05-15 15:38:18 [INFO] seversdk.logger_configure: Файл test4.mp3 взят в обработку
-2025-05-15 15:38:27 [INFO] seversdk.logger_configure: Файл test3.mp3 взят в обработку
-2025-05-15 15:38:33 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 20.508 секунд
-2025-05-15 15:38:38 [INFO] seversdk.logger_configure: Файл test2.mp3 взят в обработку
-2025-05-15 15:38:45 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 27.154 секунд
-2025-05-15 15:38:48 [INFO] seversdk.logger_configure: Файл test1.mp3 добавлен в очередь
-2025-05-15 15:38:55 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 28.223 секунд
-2025-05-15 15:38:55 [INFO] seversdk.logger_configure: Файл test1.mp3 взят в обработку
-2025-05-15 15:39:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 26.9 секунд
-2025-05-15 15:39:11 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 22.665 секунд
-2025-05-15 15:39:14 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 18.61 секунд
-68 сек =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: 
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: 
 Программа запущена: True        
 Mакс. кол-во потоков:5        
 Версия: 0.0.1a        
 Режим работы: threading
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test.mp3 взят в обработку
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test5.mp3 взят в обработку
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test4.mp3 взят в обработку
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test3.mp3 взят в обработку
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test2.mp3 взят в обработку
-2025-05-15 15:41:18 [INFO] seversdk.logger_configure: Файл test1.mp3 добавлен в очередь
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.231 секунд
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Файл test1.mp3 взят в обработку
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.386 секунд
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.417 секунд
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.549 секунд
-2025-05-15 15:42:00 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.594 секунд
-2025-05-15 15:42:10 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 10.575 секунд
-52 сек =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test.mp3 взят в обработку
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test5.mp3 взят в обработку
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test4.mp3 взят в обработку
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test3.mp3 взят в обработку
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test2.mp3 взят в обработку
+2025-05-18 18:53:36 [INFO] seversdk.logger_configure: Файл test1.mp3 добавлен в очередь
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 42.985 секунд
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Файл test1.mp3 взят в обработку
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 43.066 секунд
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 43.132 секунд
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 43.186 секунд
+2025-05-18 18:54:19 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 43.263 секунд
+2025-05-18 18:54:30 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 10.858 секунд
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: 
+Программа запущена: True        
+Mакс. кол-во потоков:5        
+Версия: 0.0.1a        
+Режим работы: threading
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test.mp3 взят в обработку
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test5.mp3 взят в обработку
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test4.mp3 взят в обработку
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test3.mp3 взят в обработку
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test2.mp3 взят в обработку
+2025-05-18 18:55:25 [INFO] seversdk.logger_configure: Файл test1.mp3 добавлен в очередь
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 39.558 секунд
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Файл test1.mp3 взят в обработку
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 39.652 секунд
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 39.732 секунд
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 39.787 секунд
+2025-05-18 18:56:05 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 39.915 секунд
+2025-05-18 18:56:15 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 9.841 секунд
