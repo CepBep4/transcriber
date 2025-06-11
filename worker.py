@@ -1,4 +1,4 @@
-from seversdk import Metrics, logger, transcribe, generateString
+from seversdk import Metrics, loggerErrors, loggerSystem, loggerAiSend, loggerTranscribe, transcribe, generateString, sendHandledData
 import time
 import datetime
 import random
@@ -12,10 +12,11 @@ def worker(path, pipe, metrics):
     
     #Транскрибация
     try:
+        loggerTranscribe.info(f"Транскрибируем файл {path}")
         text = transcribe(pipe, f'inbox_audio/{path}')
     except Exception as e:
-        logger.critical(f"Ошибка при транскрибации файла {path}: {e}")
-        logger.info(f"Файл {path} не обработан")
+        loggerErrors.critical(f"Ошибка при транскрибации файла {path}: {e}")
+        loggerSystem.info(f"Файл {path} не обработан")
     
     #Записываем в папку results
     try:
@@ -25,16 +26,18 @@ def worker(path, pipe, metrics):
         timeStamp = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         fileHandled = open(f'inbox_audio/{path}', "rb")
         
+        metadata = {
+            "text": transcribeText,
+            "session_id": sessionId,
+            "time_stamp": timeStamp,
+            "file_handled": path
+        }
+        
         #Сохраняем данные
         os.mkdir(f"results/{sessionId}")
         
         with open(f"results/{sessionId}/metadata.json", "w") as file:
-            json.dump({
-                "text": transcribeText,
-                "session_id": sessionId,
-                "time_stamp": timeStamp,
-                "file_handled": path
-            }, file)
+            json.dump(metadata, file)
             
         with open(f"results/{sessionId}/audio.mp3", "wb") as file:
             file.write(fileHandled.read())
@@ -43,26 +46,28 @@ def worker(path, pipe, metrics):
         os.remove(f'inbox_audio/{path}')
         
         #Логируем успешное сохранение
-        logger.info(f"Файл {path} обработан и сохранен: {sessionId}")
+        loggerSystem.info(f"Файл {path} обработан и сохранен: {sessionId}")
         
     except Exception as e:
-        logger.critical(f"Ошибка при сохранении обработанного результата {path}: {e}")
-        logger.info(f"Файл {path} обработан, но не сохранен")
+        loggerErrors.critical(f"Ошибка при сохранении обработанного результата {path}: {e}")
+        loggerSystem.info(f"Файл {path} обработан, но не сохранен")
         
     
     #Отправляем запрос на сервер
-    ...
+    if sendHandledData(metadata, metrics.host):
+        loggerAiSend.info("Сервер успешно принял данные")
+    else:
+        loggerAiSend.info("Сервер не принял данные")
 
-    
     #Время окончания обработки
     timeEnd = time.time()
         
     #После работы выполняем проверку очереди
-    logger.info(f"Поток завершил обработку, время обработки: {round(timeEnd-timeStart, 3)} секунд")
+    loggerSystem.info(f"Поток завершил обработку, время обработки: {round(timeEnd-timeStart, 3)} секунд")
     
     #Проверяем очередь
     if metrics.queue != []:
-        logger.info(f"Файл {metrics.queue[0]} взят в обработку")
+        loggerSystem.info(f"Файл {metrics.queue[0]} взят в обработку")
         notHandledFile = metrics.queue[0]
         metrics.queue.remove(notHandledFile)
         worker(notHandledFile, pipe, metrics)

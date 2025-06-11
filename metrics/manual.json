@@ -3,5 +3,6 @@
     "thread_count_max": 5,
     "queue": [],
     "handled_files": [],
-    "version": "0.0.3a"
+    "version": "0.0.3a",
+    "host":""
 }

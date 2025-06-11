@@ -2,6 +2,8 @@ import os
 import ffmpeg
 import random
 import string
+import requests
+import json
 
 def generateString(length: int) -> str:
     alphabet = string.ascii_lowercase + string.digits
@@ -30,3 +32,18 @@ def convertMp3ToWav(input_path: str, output_path: str) -> None:
     (
         ffmpeg.input(input_path).output(output_path, format='wav', acodec='pcm_s16le', ar='44100', ac=2).run(overwrite_output=True)
     )
+    
+#Функция для отправки запроса на сервер
+def sendHandledData(data, host):
+    with open(f"results/{data['session_id']}/audio.mp3", 'rb') as file:
+        files = {
+            'file': (f"results/{data['session_id']}/audio.mp3", file, 'application/octet-stream')
+        }
+        data = {
+            'json_data': json.dumps(data)
+        }
+
+        response = requests.post(host, files=files, data=data)
+        
+        #Возвращаем ответ сервера
+        return response.ok

@@ -7,6 +7,7 @@ class Metrics:
         self.queue = []
         self.handledFiles = []#getHandledFiles()
         self.version = getVersion()
+        self.host = getHost()
     
     def setQueue(self) -> None:
         with open('metrics/variables.json', 'r') as f:
@@ -27,6 +28,12 @@ def getHandledFiles() -> list:
     with open('metrics/variables.json', 'r') as f:
         data = json.load(f)
     return data['handled_files']
+
+#Получаем хост
+def getHost() -> str:
+    with open('metrics/variables.json', 'r') as f:
+        data = json.load(f)
+    return data['host']
 
 #Максимальное количество потоков
 def getMaxThread() -> int:

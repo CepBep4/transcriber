@@ -1,0 +1,10 @@
+2025-05-27 00:02:47 [INFO] seversdk.logger_configure: 
+Программа запущена: True        
+Mакс. кол-во потоков:5        
+Версия: 0.0.3a        
+Режим работы: threading        
+CUDA доступна: False
+2025-05-27 00:06:53 [INFO] seversdk.logger_configure: Файл test.mp3 взят в обработку
+2025-05-27 00:07:22 [INFO] seversdk.logger_configure: Файл test.mp3 обработан и сохранен: DC-23023_CALL-npxuxv3p
+2025-05-27 00:07:22 [INFO] seversdk.logger_configure: Сервер успешно принял данные
+2025-05-27 00:07:22 [INFO] seversdk.logger_configure: Поток завершил обработку, время обработки: 29.512 секунд

@@ -42,4 +42,8 @@ def setup_logger(name: str,
 
     return logger
 
-logger = setup_logger(__name__, log_file='logs/logger.log', level=logging.DEBUG)
+loggerInbox = setup_logger(__name__, log_file='logs/inbox.log', level=logging.DEBUG)
+loggerTranscribe = setup_logger(__name__, log_file='logs/transcribe.log', level=logging.DEBUG)
+loggerAiSend = setup_logger(__name__, log_file='logs/ai_send.log', level=logging.DEBUG)
+loggerErrors = setup_logger(__name__, log_file='logs/errors.log', level=logging.DEBUG)
+loggerSystem = setup_logger(__name__, log_file='logs/system.log', level=logging.DEBUG)
