@@ -47,3 +47,9 @@ def sendHandledData(data, host):
         
         #Возвращаем ответ сервера
         return response.ok
+    
+def loadMaualJson():
+    with open('metrics/manual.json', 'r') as f:
+        data = json.load(f)
+    with open('metrics/variables.json', 'w') as f:
+        json.dump(data, f)

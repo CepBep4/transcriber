@@ -28,7 +28,7 @@ def worker(path, pipe, metrics):
         
         metadata = {
             "text": transcribeText,
-            "session_id": sessionId,
+            "track_id": sessionId,
             "time_stamp": timeStamp,
             "file_handled": path
         }
@@ -41,6 +41,9 @@ def worker(path, pipe, metrics):
             
         with open(f"results/{sessionId}/audio.mp3", "wb") as file:
             file.write(fileHandled.read())
+            
+        with open(f"results/{sessionId}/transcript.txt", "w") as file:
+            file.write(transcribeText)
             
         fileHandled.close()
         os.remove(f'inbox_audio/{path}')

@@ -1,10 +1,13 @@
 import threading
 import multiprocessing
 from worker import worker
-from seversdk import logger, checkNewFile, Metrics, transribeInit
+from seversdk import loggerSystem, loggerInbox, loggerErrors, checkNewFile, Metrics, transribeInit, loadMaualJson
 import traceback
 
 WORK_MODE = 't' # t - threadiing, p - multiprocess
+
+#Загружаем конфигурацию manual.json
+loadMaualJson()
 
 #Инициализируем метрики
 metrics = Metrics()
@@ -15,7 +18,7 @@ def main():
     pipe, cudaAwailable = transribeInit()
     
     #Логируем запуск программы
-    logger.info(
+    loggerSystem.info(
         f"\nПрограмма запущена: True\
         \nMакс. кол-во потоков:{metrics.threadCountMax}\
         \nВерсия: {metrics.version}\
@@ -34,17 +37,19 @@ def main():
         
         #Если файл не None
         if newFile:
+            loggerInbox.info(f"Новый файл {newFile}")
+            
             metrics.handledFiles.append(newFile)
             
             #Если нет свободных потоков добаляем в очередь
             if metrics.threadConut >= metrics.threadCountMax:
                 metrics.queue.append(newFile)
                 
-                logger.info(f"Файл {newFile} добавлен в очередь")
+                loggerSystem.info(f"Файл {newFile} добавлен в очередь")
             
             else:
                 #Логирование
-                logger.info(f"Файл {newFile} взят в обработку")
+                loggerSystem.info(f"Файл {newFile} взят в обработку")
                 
                 #Запуск нового процесса
                 if WORK_MODE == "p":
@@ -67,11 +72,11 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         #Логируем ошибку
-        logger.critical(f"Ошибка в основном цикле программы: {e}")
+        loggerErrors.critical(f"Ошибка в основном цикле программы: {e}")
         traceback.print_exc()
     finally:
         #Логируем стандартное завершение программы
-        logger.info("Программа завершила работу")
+        loggerSystem.info("Программа завершила работу")
         
         #Сохраняем метрики
         metrics.setHandledFiles()
