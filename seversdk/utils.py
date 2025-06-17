@@ -35,9 +35,9 @@ def convertMp3ToWav(input_path: str, output_path: str) -> None:
     
 #Функция для отправки запроса на сервер
 def sendHandledData(data, host):
-    with open(f"results/{data['session_id']}/audio.mp3", 'rb') as file:
+    with open(f"results/{data['track_id']}/audio.mp3", 'rb') as file:
         files = {
-            'file': (f"results/{data['session_id']}/audio.mp3", file, 'application/octet-stream')
+            'file': (f"results/{data['track_id']}/audio.mp3", file, 'application/octet-stream')
         }
         data = {
             'json_data': json.dumps(data)
